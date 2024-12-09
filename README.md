@@ -63,3 +63,45 @@ npm run build
 ```
 
 Результат сборки будет помещён в папку `build` (или `dist`, в зависимости от настроек).
+
+---
+
+### Деплой на GitHub Pages
+
+Для того чтобы задеплоить ваше приложение на GitHub Pages, убедитесь, что у вас в `package.json` указано поле `homepage` с адресом вашего репозитория GitHub Pages, а также установлены скрипты `predeploy` и `deploy`, например:
+
+```json
+"homepage": "https://<ваш-username>.github.io/Mindbox-my-todo-app",
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+}
+```
+
+Также в файле `vite.config.ts` должен быть настроен параметр `base`, соответствующий имени вашего репозитория:
+
+```javascript
+export default defineConfig({
+  plugins: [react()],
+  base: '/Mindbox-my-todo-app/',
+  build: {
+    outDir: 'build'
+  }
+});
+```
+
+После этого выполните:
+
+```bash
+npm run deploy
+```
+
+Команда `deploy` соберёт проект (predeploy) и загрузит результат (папку `build`) в ветку `gh-pages` вашего репозитория на GitHub. Спустя минуту-две ваше приложение станет доступно по адресу, указанному в `homepage`.
+
+Пример:
+
+```
+https://<ваш-username>.github.io/Mindbox-my-todo-app
+```
+
+После деплоя вы можете открыть указанный адрес в браузере и увидеть своё приложение онлайн.
